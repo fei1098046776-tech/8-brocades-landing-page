@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://8-brocades-landing-page.vercel.app/sitemap.xml
