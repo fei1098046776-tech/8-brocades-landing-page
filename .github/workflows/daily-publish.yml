@@ -1,0 +1,26 @@
+name: Daily Auto-Publish Blog Post
+on:
+  schedule:
+    - cron: '0 9,21 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publish-article:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run Publish Script
+        run: python3 scripts/publish.py
+      - name: Commit and push changes
+        run: |
+          git config user.name 'Wellness Auto Publisher'
+          git config user.email 'autopublish@wellness.vercel.app'
+          git add -A
+          git commit -m '🤖 Auto-publish: daily content' || echo 'No changes to commit'
+          git push origin main
